@@ -26,6 +26,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script type="text/javascript" src="http://static.firebase.com/v0/firebase.js"></script>
+    <!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-timeago/0.9.3/jquery.timeago.js"></script> -->
     <script type='text/javascript'>
       $(document).ready(function() {
         var fb = new Firebase('http://gamma.firebase.com/mikexstudios/zephyr');
@@ -43,7 +44,12 @@
           post.find('.zephyr-class').text(zephyr.class);
           post.find('.zephyr-instance').text(zephyr.instance);
           post.find('.zephyr-sender').text(zephyr.sender);
-          post.find('.zephyr-time').text(zephyr.time);
+          //Convert time from epoch to ISO 8601
+          var date = new Date(0);
+          date.setUTCSeconds(zephyr.time);
+          //post.find('.zephyr-time').text(zephyr.time);
+          post.find('.zephyr-time').text(date);
+          post.find('.zephyr-time').attr('title', date.toISOString());
           post.find('.zephyr-sig').text(zephyr.zsig);
           post.find('.zephyr-body').text(zephyr.body);
           $('#messages').prepend(post);
@@ -96,7 +102,8 @@
         <span class="label zephyr-class"></span> / 
         <strong class="zephyr-instance"></strong> / 
         <span class="label label-info zephyr-sender"></span> 
-        <span class="zephyr-time"></span> 
+        <!-- <span class="zephyr-time"></span> -->
+        <abbr class="zephyr-time timeago" title=''></abbr>
         (<em class="zephyr-sig"></em>)
       </div>
       <div class="body well zephyr-body">
