@@ -1,2 +1,3 @@
 pyrex #need to manually install before pyzephyr for build
 -e git://github.com/ebroder/python-zephyr.git#egg=pyzephyr
+-e git://github.com/mikexstudios/python-firebase.git#egg=python-firebase
