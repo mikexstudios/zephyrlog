@@ -33,6 +33,20 @@
         //Callback for each new zephyr message
         fb.on('child_added', function(snapshot) {
           var zephyr = snapshot.val();
+          zephyr.id = snapshot.name();
+          $zephyr = zephyr;
+          
+          //Make copy of post template and insert data
+          var post = $('#post-template').clone();
+          post.css('display', 'block');
+          post.attr('id', zephyr.id);
+          post.find('.zephyr-class').text(zephyr.class);
+          post.find('.zephyr-instance').text(zephyr.instance);
+          post.find('.zephyr-sender').text(zephyr.sender);
+          post.find('.zephyr-time').text(zephyr.time);
+          post.find('.zephyr-sig').text(zephyr.zsig);
+          post.find('.zephyr-body').text(zephyr.body);
+          $('#messages').prepend(post);
         });
       });
     </script>
@@ -79,14 +93,13 @@
 
     <div id="post-template" class="post" style="display: none">
       <div class="status">
-        <span class="label zephyr-class">mxh</span> / 
-        <strong class="zephyr-instance">test</strong> / 
-        <span class="label label-info zephyr-sender">mxh</span> 
-        <span class="zephyr-time">16:55</span> 
-        (<em class="zephyr-sig">Redacted</em>)
+        <span class="label zephyr-class"></span> / 
+        <strong class="zephyr-instance"></strong> / 
+        <span class="label label-info zephyr-sender"></span> 
+        <span class="zephyr-time"></span> 
+        (<em class="zephyr-sig"></em>)
       </div>
       <div class="body well zephyr-body">
-        This is a test.
       </div>
     </div>
 
