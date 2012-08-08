@@ -30,6 +30,7 @@
     <script type='text/javascript'>
       $(document).ready(function() {
         var fb = new Firebase('http://gamma.firebase.com/mikexstudios/zephyr');
+        fb = fb.limit(50); //limit total displayed messages to 50
 
         //Callback for each new zephyr message
         fb.on('child_added', function(snapshot) {
