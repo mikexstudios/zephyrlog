@@ -30,12 +30,13 @@
     <script type='text/javascript'>
       $(document).ready(function() {
         var fb = new Firebase('http://gamma.firebase.com/mikexstudios/zephyr');
+        fb = fb.limit(50); //limit total displayed messages to 50
 
         //Callback for each new zephyr message
         fb.on('child_added', function(snapshot) {
           var zephyr = snapshot.val();
           zephyr.id = snapshot.name();
-          $zephyr = zephyr;
+          //$zephyr = zephyr;
           
           //Make copy of post template and insert data
           var post = $('#post-template').clone();
@@ -53,6 +54,13 @@
           post.find('.zephyr-sig').text(zephyr.zsig);
           post.find('.zephyr-body').text(zephyr.body);
           $('#messages').prepend(post);
+        });
+
+        //Callback for each zephyr message to be removed
+        fb.on('child_removed', function(snapshot) {
+          var zephyr = snapshot.val();
+          zephyr.id = snapshot.name();
+          $('#'+zephyr.id).remove()
         });
       });
     </script>
